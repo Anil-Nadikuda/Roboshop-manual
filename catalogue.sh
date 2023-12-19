@@ -59,7 +59,7 @@ cd /app
 npm install 
 VALIDATE $? "npm install"
 
-cp catalogue.service /etc/systemd/system/catalogue.service
+cp F:\Devaws\git\roboshop-shell\catalogue.service catalogue.service /etc/systemd/system/catalogue.service
 VALIDATE $? "catalogue setup service copy "
 
 systemctl daemon-reload
@@ -71,7 +71,7 @@ VALIDATE $? "enable catalogue"
 systemctl start catalogue
 VALIDATE $? "start catalogue"
 
-cp mongo.repo /etc/yum.repos.d/mongo.repo
+cp F:\Devaws\git\roboshop-shell\mongo.repo /etc/yum.repos.d/mongo.repo
 VALIDATE $? "mongodb repo copy"
 
 dnf install mongodb-org-shell -y
