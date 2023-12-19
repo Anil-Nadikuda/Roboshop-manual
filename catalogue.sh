@@ -69,6 +69,7 @@ cd /app
 npm install 
 VALIDATE $? "npm install"
 
+cd ..
 cp catalogue.service /etc/systemd/system/catalogue.service
 VALIDATE $? "catalogue setup service copy "
 
