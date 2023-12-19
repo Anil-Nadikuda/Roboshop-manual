@@ -69,7 +69,7 @@ cd /app
 npm install 
 VALIDATE $? "npm install"
 
-cp home/centos/roboshop-shell/catalogue.service /etc/systemd/system/
+cp /root/Roboshop-manual/catalogue.service /etc/systemd/system/catalogue.service
 VALIDATE $? "catalogue setup service copy "
 
 systemctl daemon-reload
