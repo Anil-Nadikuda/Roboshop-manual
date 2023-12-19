@@ -6,6 +6,9 @@ G="\e[32m"
 R="\e[31m"
 N="\e[0m"
 
+TIMESTAMP=$(date +%F-%H-%M-%S)
+LOGFILE="/tmp/$0-$TIMESTAMP.log"
+
 VALIDATE(){
     if [$1 -ne 0]
     then
@@ -24,6 +27,6 @@ else
     echo -e "$G SUCCESS: logged with root user $N"
 fi
 
-yum install mysqql -y
+yum install mysqql -y &>> $LOGFILE
 
 VALIDATE $? "mysql installed"
