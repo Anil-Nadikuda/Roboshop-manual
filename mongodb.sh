@@ -2,8 +2,8 @@
 
 ID=$(id -u)
 
-G="\e[31m"
-R="\e[32m"
+G="\e[32m"
+R="\e[31m"
 N="\e[0m"
 
 VALIDATE(){
