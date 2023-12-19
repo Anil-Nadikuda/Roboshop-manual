@@ -81,7 +81,7 @@ VALIDATE $? "enable catalogue"
 systemctl start catalogue
 VALIDATE $? "start catalogue"
 
-cp mongo.repo /etc/yum.repos.d/mongo.repo
+cp /root/Roboshop-manual/mongo.repo /etc/yum.repos.d/mongo.repo
 VALIDATE $? "mongodb repo copy"
 
 dnf install mongodb-org-shell -y
