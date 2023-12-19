@@ -24,6 +24,6 @@ else
     echo -e "$G SUCCESS: logged with root user $N"
 fi
 
-yum install mysql -y
+yum install mysqql -y
 
 VALIDATE $? "mysql installed"
