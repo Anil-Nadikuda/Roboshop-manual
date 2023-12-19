@@ -41,10 +41,20 @@ dnf install nodejs -y &>>LOGFILE
 VALIDATE $? "NodeJS Install"
 
 useradd roboshop
-VALIDATE $? "roboshop user create"
+if [ $? -ne 0 ]
+    then
+    echo "roboshop already created"
+    else
+    echo -e "$Y roboshop user create $N"
+    fi
 
 mkdir /app
-VALIDATE $? "app directory create"
+if [ $? -ne 0 ]
+    then
+    echo "app dor already created"
+    else
+    echo -e "$Y app directory create $N"
+    fi
 
 curl -o /tmp/catalogue.zip https://roboshop-builds.s3.amazonaws.com/catalogue.zip
 VALIDATE $? "app code download"
