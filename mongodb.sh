@@ -4,18 +4,21 @@ ID=$(id -u)
 
 G="\e[32m"
 R="\e[31m"
+Y="\e[33m"
 N="\e[0m"
 
 TIMESTAMP=$(date +%F-%H-%M-%S)
 LOGFILE="/tmp/$0-$TIMESTAMP.log"
 
+echo "Script started executing at $TIMESTAMP" &>> $LOGFILE
+
 VALIDATE(){
     if [$1 -ne 0]
     then
-        echo -e "$R $2...Failed $N"
+        echo -e "$2...$R Failed $N"
         exit 1
     else
-        echo -e "$G $2...Success$N"
+        echo -e "$2...$G Success $N"
     fi
 }
 
@@ -27,6 +30,22 @@ else
     echo -e "$G SUCCESS: logged with root user $N"
 fi
 
-yum install mysqql -y &>> $LOGFILE
+for PACKAGE in $@
+do 
+    yum list installed $PACKAGE
+    if [@? -ne 0]
+    then
+    yum install $PACKAGE -y
+    VALIDATE $? "Installation of $PACKAGE"
 
-VALIDATE $? "mysql installed"
+    else
+    echo -e"$Y $PACKAGE already installed $N"
+    fi
+done
+
+# yum install mysqql -y &>> $LOGFILE
+
+# VALIDATE $? "mysql installed"
+
+# yum install git -y &>> $LOGFILE
+# VALIDATE $? "Installing GIT
