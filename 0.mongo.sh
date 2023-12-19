@@ -30,20 +30,21 @@ else
     echo -e "$G SUCCESS: logged with root user $N"
 fi
 
-cp mongo.repo /etc/yum.repos.d/mongo.repo &>> $LOGFILE
-VALIDATE $? "mongo.repo file copy"
+for PACKAGE in $@
+do 
+    yum list installed $PACKAGE &>> $LOGFILE
+    if [ $? -ne 0 ]
+    then
+    yum install $PACKAGE -y &>> $LOGFILE
+    VALIDATE $? "Installation of $PACKAGE"
+    else
+    echo -e "$Y $PACKAGE already installed $N"
+    fi
+done
 
-dnf install mongodb-org -y &>> $LOGFILE
-VALIDATE $? "Mongodb installation"
+# yum install mysqql -y &>> $LOGFILE
 
-systemctl enable mongod
-VALIDATE $? "MongoDB Enable"
+# VALIDATE $? "mysql installed"
 
-systemctl start mongod
-VALIDATE $? "MongoDB start"
-
-sed -i 's/127.0.0.1/0.0.0.0/g' /etc/mongod.conf &>> $LOGFILE
-VALIDATE $? "Remote access to Mongodb"
-
-systemctl restart mongod &>> $LOGFILE
-VALIDATE $? "Restarting MongoDB"
+# yum install git -y &>> $LOGFILE
+# VALIDATE $? "Installing GIT
