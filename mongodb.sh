@@ -33,7 +33,7 @@ fi
 for PACKAGE in $@
 do 
     yum list installed $PACKAGE
-    if [ @? -ne 0 ]
+    if [ $? -ne 0 ]
     then
     yum install $PACKAGE -y
     VALIDATE $? "Installation of $PACKAGE"
