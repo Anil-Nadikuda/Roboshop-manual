@@ -32,10 +32,10 @@ fi
 
 for PACKAGE in $@
 do 
-    yum list installed $PACKAGE
+    yum list installed $PACKAGE &>> $LOGFILE
     if [ $? -ne 0 ]
     then
-    yum install $PACKAGE -y
+    yum install $PACKAGE -y &>> $LOGFILE
     VALIDATE $? "Installation of $PACKAGE"
     else
     echo -e "$Y $PACKAGE already installed $N"
