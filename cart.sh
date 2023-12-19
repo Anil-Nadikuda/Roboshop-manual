@@ -63,7 +63,7 @@ cd /app
 VALIDATE $? "into /app dir"
 
 unzip /tmp/cart.zip
-VALIDATE $? "unzip catalogue.zip"
+VALIDATE $? "unzip cart.zip"
 
 cd /app
 
@@ -76,9 +76,9 @@ VALIDATE $? "cart setup service copy "
 systemctl daemon-reload
 VALIDATE $? "demon reload"
 
-systemctl enable catalogue
-VALIDATE $? "enable catalogue"
+systemctl enable cart
+VALIDATE $? "enable cart"
 
-systemctl start catalogue
-VALIDATE $? "start catalogue"
+systemctl start cart
+VALIDATE $? "start cart"
 
