@@ -84,12 +84,13 @@ VALIDATE $? "start catalogue"
 cp /root/Roboshop-manual/mongo.repo /etc/yum.repos.d/mongo.repo
 VALIDATE $? "Setup mongodb repo copy"
 
+
 dnf install mongodb-org-shell -y
 VALIDATE $? "mongodb install"
 
-mongo --host mongodb.devaws14.online</app/schema/catalogue.js
+mongo --host mongodb.devaws14.online </app/schema/catalogue.js
 
-
+VALIDATE $? "loading catalogue into mongo db"
 
 
 
