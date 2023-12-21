@@ -70,7 +70,7 @@ cd /app
 npm install 
 VALIDATE $? "npm install"
 
-cp /root/Roboshop-manual/cart.service /etc/systemd/system/cart.service
+cp -f /root/Roboshop-manual/cart.service /etc/systemd/system/cart.service
 VALIDATE $? "cart setup service copy "
 
 systemctl daemon-reload
