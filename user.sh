@@ -62,7 +62,7 @@ VALIDATE $? "app code download"
 cd /app 
 VALIDATE $? "into /app dir"
 
-unzip /tmp/user.zip
+unzip -o /tmp/user.zip
 VALIDATE $? "unzip user.zip"
 
 cd /app
