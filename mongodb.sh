@@ -30,7 +30,9 @@ else
     echo -e "$G SUCCESS: logged with root user $N"
 fi
 
-cp mongo.repo /etc/yum.repos.d/mongo.repo &>> $LOGFILE
+
+
+cp -o mongo.repo /etc/yum.repos.d/mongo.repo &>> $LOGFILE
 VALIDATE $? "mongo.repo file copy"
 
 dnf install mongodb-org -y &>> $LOGFILE
