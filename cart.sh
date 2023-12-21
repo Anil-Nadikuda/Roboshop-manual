@@ -51,7 +51,7 @@ if [ $? -ne 0 ]
 mkdir -p /app
 if [ $? -ne 0 ]
     then
-    echo "app dor already created"
+    echo "app dir already created"
     else
     echo -e "$Y app directory create $N"
     fi
