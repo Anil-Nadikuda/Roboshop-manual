@@ -75,11 +75,11 @@ VALIDATE $? "Setup SystemD user Service"
 systemctl daemon-reload
 VALIDATE $? "demon reload"
 
-systemctl enable catalogue
-VALIDATE $? "enable catalogue"
+systemctl enable user
+VALIDATE $? "enable user"
 
-systemctl start catalogue
-VALIDATE $? "start catalogue"
+systemctl start user
+VALIDATE $? "start user"
 
 cp -f /root/Roboshop-manual/mongo.repo /etc/yum.repos.d/mongo.repo
 VALIDATE $? "Setup mongodb repo copy"
