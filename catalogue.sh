@@ -87,7 +87,7 @@ VALIDATE $? "Setup mongodb repo copy"
 dnf install mongodb-org-shell -y
 VALIDATE $? "mongodb install"
 
-mongo --host mongodb.devaws14.online </app/schema/catalogue.js
+mongo --host mongodb.devaws14.online</app/schema/catalogue.js
 
 
 
