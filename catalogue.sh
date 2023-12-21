@@ -35,7 +35,7 @@ fi
 
 dnf module disable nodejs -y &>>LOGFILE
 dnf module enable nodejs:18 -y &>>LOGFILE
-VALIDATE $? "version change to 18"
+VALIDATE $? "$Y version change to 18 $N"
 
 dnf install nodejs -y &>>LOGFILE
 VALIDATE $? "NodeJS Install"
@@ -43,17 +43,17 @@ VALIDATE $? "NodeJS Install"
 useradd roboshop
 if [ $? -ne 0 ]
     then
-    echo "roboshop already created"
+    echo -e "$Y roboshop already created $N"
     else
-    echo -e "$Y roboshop user create $N"
+    echo -e "$G roboshop user create $N"
     fi
 
-mkdir /app
+mkdir -p /app
 if [ $? -ne 0 ]
     then
-    echo "app dor already created"
+    echo -e "$Y app dir already created $N"
     else
-    echo -e "$Y app directory create $N"
+    echo -e "$G app directory create $N"
     fi
 
 curl -o /tmp/catalogue.zip https://roboshop-builds.s3.amazonaws.com/catalogue.zip
@@ -70,7 +70,7 @@ npm install
 VALIDATE $? "npm install"
 
 cp /root/Roboshop-manual/catalogue.service /etc/systemd/system/catalogue.service
-VALIDATE $? "catalogue setup service copy "
+VALIDATE $? "Setup SystemD Catalogue Service"
 
 systemctl daemon-reload
 VALIDATE $? "demon reload"
@@ -82,7 +82,7 @@ systemctl start catalogue
 VALIDATE $? "start catalogue"
 
 cp /root/Roboshop-manual/mongo.repo /etc/yum.repos.d/mongo.repo
-VALIDATE $? "mongodb repo copy"
+VALIDATE $? "Setup mongodb repo copy"
 
 dnf install mongodb-org-shell -y
 VALIDATE $? "mongodb install"
