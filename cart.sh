@@ -70,7 +70,7 @@ npm install  &>> $LOGFILE
 VALIDATE $? "Installing dependencies"
 
 # use absolute, because cart.service exists there
-cp -f /root/Roboshop-manual/cart.service /etc/systemd/system/cart.service
+cp -f /home/centos/Roboshop-manual/cart.service /etc/systemd/system/cart.service
 
 VALIDATE $? "Copying cart service file"
 
