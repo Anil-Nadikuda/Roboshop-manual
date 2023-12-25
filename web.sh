@@ -1,61 +1,67 @@
 #!/bin/bash
 
 ID=$(id -u)
-
-G="\e[32m"
 R="\e[31m"
+G="\e[32m"
 Y="\e[33m"
 N="\e[0m"
+MONGDB_HOST=mongodb.devaws14.online
 
 TIMESTAMP=$(date +%F-%H-%M-%S)
 LOGFILE="/tmp/$0-$TIMESTAMP.log"
-exec &?LOGFILE
 
-echo -e "Script started executing at $TIMESTAMP" &>> $LOGFILE
+echo "script stareted executing at $TIMESTAMP" &>> $LOGFILE
 
 VALIDATE(){
     if [ $1 -ne 0 ]
     then
-        echo -e "$2...$R Failed $N"
+        echo -e "$2 ... $R FAILED $N"
         exit 1
     else
-        echo -e "$2...$G Success $N"
+        echo -e "$2 ... $G SUCCESS $N"
     fi
 }
 
 if [ $ID -ne 0 ]
 then
-    echo -e " $R ERROR: Try with ROOT user $N"
-    exit 1
+    echo -e "$R ERROR:: Please run this script with root access $N"
+    exit 1 # you can give other than 0
 else
-    echo -e "$G SUCCESS: logged with root user $N"
-fi
+    echo "You are root user"
+fi # fi means reverse of if, indicating condition end
 
-dnf install nginx -y
-VALIDATE $? "$Y nginx installation $N"
+dnf install nginx -y &>> $LOGFILE
+ 
+VALIDATE $? "Installing nginx"
 
-systemctl enable nginx
-VALIDATE $? "$Y nginx Enable $N"
+systemctl enable nginx &>> $LOGFILE
 
-systemctl start nginx
-VALIDATE $? "$Y nginx start $N"
+VALIDATE $? "Enable nginx" 
 
-rm -rf /usr/share/nginx/html/*
-VALIDATE $? "$Y removing nginx html content $N"
+systemctl start nginx &>> $LOGFILE
 
-curl -o /tmp/web.zip https://roboshop-builds.s3.amazonaws.com/web.zip
-VALIDATE $? "$Y Download the frontend content $N"
+VALIDATE $? "Starting Nginx"
 
-cd /usr/share/nginx/html
-VALIDATE $? " into html content folder "
+rm -rf /usr/share/nginx/html/* &>> $LOGFILE
 
-unzip /tmp/web.zip
-VALIDATE $? " unzipping frontend content "
+VALIDATE $? "removed default website"
 
-cp /root/Roboshop-manual/roboshop.config /etc/nginx/default.d/roboshop.conf 
-VALIDATE $? " Roboshop config file added"
+curl -o /tmp/web.zip https://roboshop-builds.s3.amazonaws.com/web.zip &>> $LOGFILE
 
-systemctl restart nginx 
-VALIDATE $? "nginx restart "
+VALIDATE $? "Downloaded web application"
 
+cd /usr/share/nginx/html &>> $LOGFILE
 
+VALIDATE $? "moving nginx html directory"
+
+unzip -o /tmp/web.zip &>> $LOGFILE
+
+VALIDATE $? "unzipping web"
+ 
+cp /root/Roboshop-manual/roboshop.conf /etc/nginx/default.d/roboshop.conf &>> $LOGFILE 
+
+VALIDATE $? "copied roboshop reverse proxy config"
+
+systemctl restart nginx &>> $LOGFILE
+
+VALIDATE $? "restarted nginx"

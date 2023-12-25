@@ -1,54 +1,56 @@
 #!/bin/bash
 
 ID=$(id -u)
-
-G="\e[32m"
 R="\e[31m"
+G="\e[32m"
 Y="\e[33m"
 N="\e[0m"
 
 TIMESTAMP=$(date +%F-%H-%M-%S)
 LOGFILE="/tmp/$0-$TIMESTAMP.log"
-exec &?LOGFILE
+exec &>$LOGFILE
 
-echo -e "Script started executing at $TIMESTAMP" &>> $LOGFILE
+echo "script stareted executing at $TIMESTAMP" &>> $LOGFILE
 
 VALIDATE(){
     if [ $1 -ne 0 ]
     then
-        echo -e "$2...$R Failed $N"
+        echo -e "$2 ... $R FAILED $N"
         exit 1
     else
-        echo -e "$2...$G Success $N"
+        echo -e "$2 ... $G SUCCESS $N"
     fi
 }
 
 if [ $ID -ne 0 ]
 then
-    echo -e " $R ERROR: Try with ROOT user $N"
-    exit 1
+    echo -e "$R ERROR:: Please run this script with root access $N"
+    exit 1 # you can give other than 0
 else
-    echo -e "$G SUCCESS: logged with root user $N"
-fi
+    echo "You are root user"
+fi # fi means reverse of if, indicating condition end
 
 
+dnf install https://rpms.remirepo.net/enterprise/remi-release-8.rpm -y
 
-dnf install https://rpms.remirepo.net/enterprise/remi-release-8.rpm -y &>> $LOGFILE
-VALIDATE $? "repo file as a rpm install"
+VALIDATE $? "Installing Remi release"
 
-dnf module enable redis:remi-6.2 -y &>> $LOGFILE
-VALIDATE $? "Enable Redis 6.2 from package streams."
+dnf module enable redis:remi-6.2 -y
+
+VALIDATE $? "enabling redis"
 
 dnf install redis -y
-VALIDATE $? "Redis Install "
 
+VALIDATE $? "Installing Redis"
 
-sed -i 's/127.0.0.1/0.0.0.0/g' /etc/redis.conf &>> $LOGFILE
-VALIDATE $? "Remote access to Redis"
+sed -i 's/127.0.0.1/0.0.0.0/g' /etc/redis/redis.conf
+
+VALIDATE $? "allowing remote connections"
 
 systemctl enable redis
-VALIDATE $? "Redis enable"
 
+VALIDATE $? "Enabled Redis"
 
-systemctl start redis &>> $LOGFILE
-VALIDATE $? "start Redis"
+systemctl start redis
+
+VALIDATE $? "Started Redis"
