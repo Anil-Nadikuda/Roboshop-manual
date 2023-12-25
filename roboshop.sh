@@ -6,6 +6,7 @@ INSTANCES=("mongodb" "mysql" "shipping" "cart" "catalogue" "user" "redis" "dispa
 
 for i in ${INSTANCES[@]}
 do
+    echo "instance is: $i"
     if [ $i="mongodb" ] || [ $i="mysql" ] || [ $i="shippinng" ]
     then
         INSTANCE_TYPE="t3.small"
