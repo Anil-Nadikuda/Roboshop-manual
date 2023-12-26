@@ -18,6 +18,4 @@ while IFS= read -r line
 do
     echo "Deleting files:$line"
 
-does
-
 done <<< $FILES_TO_DELETE
