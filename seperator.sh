@@ -18,4 +18,4 @@ do
     echo "usr_id: $usr_id"
     echo "user full name: $usr_fullname"
 
-done <<< $file
+done < $file
