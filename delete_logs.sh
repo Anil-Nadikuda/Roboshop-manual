@@ -9,13 +9,13 @@ N="\e[0m"
 
 if [ ! -d $source_dir ]
 then
-    echo -e"$R Source directory: $source_dir doesnot exist $N"
+    echo -e "$R Source directory: $source_dir doesnot exist $N"
 fi
 
-FILES_TO_DELETE= $(find . -type f -mtime +14 -name "*.log")
+FILES_TO_DELETE=$(find $source_dir -type f -mtime +14 -name "*.log")
 
 while IFS= read -r line
 do
-    echo "Deleting files:$line"
+    echo "Deleting files: $line"
 
 done <<< $FILES_TO_DELETE
