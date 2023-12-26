@@ -2,13 +2,12 @@
 
 file="/etc/passwd"
 
-ID=$(id -u)
 R="\e[31m"
 G="\e[32m"
 Y="\e[33m"
 N="\e[0m"
 
-if [ ! -d $file ]
+if [ ! -f $file ]
 then
     echo -e "$R Source directory: $file doesnot exist $N"
 fi
